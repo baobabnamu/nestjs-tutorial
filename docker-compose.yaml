@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+    api:
+        # image: thomas-oliver/nestjs-dockerized 
+        build:
+            dockerfile: ./Dockerfile
+            context: .
+        depends_on: 
+            - postgres
+        environment: 
+          DATABASE_URL: postgres://postgres:postgres@postgres:5432/board-app
+          JWT_SECRET: 'Secret1234'
+          JWT_EXPRIES: 3600
+        ports:
+            - "3000:3000"
+
+    postgres:
+        image: postgres
+        ports:
+            - "5432:5432"
+        environment: 
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: board-app
+
+      
